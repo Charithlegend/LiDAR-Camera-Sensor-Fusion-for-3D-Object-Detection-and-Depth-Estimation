@@ -1,5 +1,4 @@
 """LiDAR-Camera Sensor Fusion for 3D Object Detection & Depth Estimation
-=======================================================================
 Combines YOLO instance segmentation with Velodyne LiDAR point cloud data
 to estimate bumper depth for detected cars across KITTI dataset frames.
 Evaluates inlier vs bleed-out points and visualises 3D bounding boxes
