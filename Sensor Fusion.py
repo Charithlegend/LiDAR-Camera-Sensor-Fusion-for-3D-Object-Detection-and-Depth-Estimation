@@ -16,7 +16,6 @@ import sys
 from pathlib import Path
 from ultralytics import YOLO
 
-
 # Constants
 # YOLO class index for 'car' in COCO
 CAR_CLASS_ID = 2
@@ -225,7 +224,6 @@ def get_car_masks(results, h_img: int, w_img: int):
             masks.append(canvas)
     return masks
 
-
 # 3D Box Geometry
 def compute_3d_box_corners(h: float, w: float, l: float, loc: np.ndarray, yaw: float) -> np.ndarray:
     """Compute the 8 corners of a 3D bounding box in camera coordinates.
@@ -300,7 +298,6 @@ def draw_3d_box(display_img: np.ndarray, u_box: np.ndarray, v_box: np.ndarray):
                  (u_box[i], v_box[i]),
                  (u_box[i + 4], v_box[i + 4]),
                  COLOR_GT_BOX, 1)
-
 
 # Legend Drawing
 def draw_legend(display_img: np.ndarray):
