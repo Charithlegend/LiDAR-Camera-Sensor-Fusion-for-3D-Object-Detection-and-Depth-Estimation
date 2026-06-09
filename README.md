@@ -1,2 +1,8 @@
 # LiDAR-Camera-Sensor-Fusion-for-3D-Object-Detection-and-Depth-Estimation
-LiDAR-camera sensor fusion pipeline using YOLO instance segmentation and Velodyne point clouds on KITTI. Estimates depth via 5th percentile inlier filtering, evaluates bleed-out, and benchmarks YOLOv8n, YOLOv11, and YOLO26n across 20 frames.
+A sensor fusion pipeline in Python combining YOLO instance segmentation with Velodyne LiDAR point cloud data across 20 KITTI frames. Raw LiDAR scans are projected into the camera frame via per-frame calibration matrices, enabling bumper depth estimation with significantly higher precision than a monocular approach.
+
+The core challenge was point bleed-out, where LiDAR points fall outside the car boundary but remain inside the segmentation mask. This was consistent across all tested models, with multiclass detection and imprecise masking in newer architectures contributing to higher bleed-out rates than expected.
+
+Multiple filtering approaches were evaluated to address this. Initially, DBSCAN clustering with an epsilon of 0.5 to 0.6 was considered, including multi-ID clustering to isolate individual car point clouds, but its computational overhead resulted in the pipeline to lag, ruling it out for real-time use. The 5th percentile depth estimation over the inlier pool was ultimately chosen, converging naturally towards the vehicle surface without aggressive filtering or data loss.
+
+In conclusion, three YOLO versions were benchmarked to understand how model choice affects fusion quality. YOLOv8n delivered the strongest performance with an MAE of 0.34m, RMSE of 0.64m, accuracy of 91.84% and bleed-out of 54.57%, followed by YOLOv11 at 0.38m, 0.76m, 89.7% and 58.73%, and YOLO26n at 0.36m, 0.7m, 85.57% and 62.51%. Despite being the older architecture, YOLOv8n proved the most reliable, showing that newer does not always mean better when segmentation precision directly drives depth accuracy.
